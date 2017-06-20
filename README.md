@@ -7,7 +7,7 @@ At [r/roguelikedev](https://www.reddit.com/r/roguelikedev/) we're doing a dev-al
 ## If you would like to participate on GitHub
 
 * [Sign up for a free personal account](https://github.com/signup/free) if you don't already have one.
-* Fork [this repository][https://github.com/aaron-santos/roguelikedev-does-the-complete-roguelike-tutorial] to your account.
+* Fork [this repository](https://github.com/aaron-santos/roguelikedev-does-the-complete-roguelike-tutorial) to your account.
 * Clone the repository on your computer and follow the tutorial.
 * Follow along with the [weekly posts](https://www.reddit.com/r/roguelikedev/search?q=TCRT&restrict_sr=on).
 * Update the `README.md` file to include a description of your game, how/where to play/download it, how to build/compile it, what dependencies it has, etc.
