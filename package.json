@@ -1,0 +1,30 @@
+{
+  "name": "reddit-rl",
+  "version": "0.0.1",
+  "description": "r/roguelikedev does tutorial",
+  "main": "index.js",
+  "dependencies": {
+    "babel-preset-env": "^1.5.2",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-sourcemaps": "^2.6.0"
+  },
+  "devDependencies": {
+    "babel-preset-env": "^1.5.2",
+    "gulp-babel": "^6.1.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmiller113/roguelikedev-does-the-complete-roguelike-tutorial.git"
+  },
+  "author": "Daniel Miller",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dmiller113/roguelikedev-does-the-complete-roguelike-tutorial/issues"
+  },
+  "homepage": "https://github.com/dmiller113/roguelikedev-does-the-complete-roguelike-tutorial#readme"
+}
