@@ -1,5 +1,6 @@
 import libtcodpy as libtcod
 from input_handlers import handle_keys
+from entity import Entity
 
 #fonction main Check if the module is ran as main program (name devient main).
 #Si ce fichier est importé d'un autre module, name sera le nom du module
@@ -7,8 +8,10 @@ def main():
 #Carac de l'écran
     screen_width = 80
     screen_height = 50
-    player_x = int(screen_width /2)
-    player_y = int(screen_height /2)
+
+    player = Entity(int(screen_width / 2), int(screen_height / 2), '@', libtcod.purple)
+    npc = Entity(int(screen_width / 2 - 5), int(screen_height / 2), '@', libtcod.yellow)
+    entities = [npc, player]
 
     libtcod.console_set_custom_font('arial10x10.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TCOD)
 #What create the screen (Width, Height, Nom, Fullscreen)
@@ -23,7 +26,7 @@ def main():
 #Function that capture new event
         libtcod.sys_check_for_event(libtcod.EVENT_KEY_PRESS, key, mouse)
 #Font
-        libtcod.console_set_default_foreground(con, libtcod.purple)
+        libtcod.console_set_default_foreground(con, libtcod.white)
 #coordonées du perso (La console, x, y, char, print+bckgrd rien)
         libtcod.console_put_char(con, player_x, player_y, '@', libtcod.BKGND_NONE)
         libtcod.console_blit(con, 0, 0, screen_width, screen_height, 0, 0, 0)
@@ -41,8 +44,7 @@ def main():
 
         if move:
             dx, dy = move
-            player_x += dx
-            player_y += dy
+            player.move(dx, dy)
 
         elif exiting:
             return True
