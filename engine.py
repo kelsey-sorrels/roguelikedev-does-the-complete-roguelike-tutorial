@@ -1,6 +1,7 @@
 import libtcodpy as libtcod
 from input_handlers import handle_keys
 from entity import Entity
+from render_function import render_all, clear_all
 
 #fonction main Check if the module is ran as main program (name devient main).
 #Si ce fichier est importé d'un autre module, name sera le nom du module
@@ -8,6 +9,8 @@ def main():
 #Carac de l'écran
     screen_width = 80
     screen_height = 50
+    map_width = 80
+    map_eight = 45
 
     player = Entity(int(screen_width / 2), int(screen_height / 2), '@', libtcod.purple)
     npc = Entity(int(screen_width / 2 - 5), int(screen_height / 2), '@', libtcod.yellow)
@@ -25,14 +28,12 @@ def main():
     while not libtcod.console_is_window_closed():
 #Function that capture new event
         libtcod.sys_check_for_event(libtcod.EVENT_KEY_PRESS, key, mouse)
-#Font
-        libtcod.console_set_default_foreground(con, libtcod.white)
-#coordonées du perso (La console, x, y, char, print+bckgrd rien)
-        libtcod.console_put_char(con, player_x, player_y, '@', libtcod.BKGND_NONE)
-        libtcod.console_blit(con, 0, 0, screen_width, screen_height, 0, 0, 0)
-        libtcod.console_flush()
 
-        libtcod.console_put_char(con, player_x, player_y, ' ', libtcod.BKGND_NONE)
+#Function that draws entities
+        render_all(con, entities, screen_width, screen_height)
+        libtcod.console_flush()
+#Clear les entities pour que ça ne laisse pas de traces
+        clear_all(con, entities)
 #Partie pour bouger. Apelle le fichier Handle keys.
 #Return des dictionary.Ces valeurs vont dans la variable action
 #Action contiendras des clés (move, exit, or fullscre)
