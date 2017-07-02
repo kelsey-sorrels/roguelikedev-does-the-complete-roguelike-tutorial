@@ -24,6 +24,8 @@ repositories {
 dependencies {
     compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: "$kotlin_version"
     compile group: 'net.trystan', name: 'ascii-panel', version: '1.2-SNAPSHOT'
+    compile group: 'io.github.microutils', name: 'kotlin-logging', version: '1.4.5'
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.8.0-alpha2'
     testCompile group:"org.junit.jupiter", name: "junit-jupiter-api", version: "$junit5_version"
     testRuntime group:"org.junit.jupiter", name: "junit-jupiter-engine", version: "$junit5_version"
 }
