@@ -2,6 +2,7 @@ import libtcodpy as libtcod
 from input_handlers import handle_keys
 from entity import Entity
 from render_function import render_all, clear_all
+from map_objects.game_map import GameMap
 
 #fonction main Check if the module is ran as main program (name devient main).
 #Si ce fichier est importé d'un autre module, name sera le nom du module
@@ -10,7 +11,13 @@ def main():
     screen_width = 80
     screen_height = 50
     map_width = 80
-    map_eight = 45
+    map_height = 45
+
+    colors = {
+        'dark_wall': libtcod.Color(0, 0, 100),
+        'dark_ground': libtcod.Color(50, 50, 150)
+    }
+
 
     player = Entity(int(screen_width / 2), int(screen_height / 2), '@', libtcod.purple)
     npc = Entity(int(screen_width / 2 - 5), int(screen_height / 2), '@', libtcod.yellow)
@@ -21,6 +28,8 @@ def main():
     libtcod.console_init_root(screen_width, screen_height, 'Eolandia', False)
 #Console principale?
     con = libtcod.console_new(screen_width, screen_height)
+#Initialise la Game map
+    game_map = GameMap(map_width, map_height)
 
     key = libtcod.Key()
     mouse = libtcod.Mouse()
@@ -30,7 +39,7 @@ def main():
         libtcod.sys_check_for_event(libtcod.EVENT_KEY_PRESS, key, mouse)
 
 #Function that draws entities
-        render_all(con, entities, screen_width, screen_height)
+        render_all(con, entities, game_map, screen_width, screen_height, colors)
         libtcod.console_flush()
 #Clear les entities pour que ça ne laisse pas de traces
         clear_all(con, entities)
@@ -45,7 +54,8 @@ def main():
 
         if move:
             dx, dy = move
-            player.move(dx, dy)
+            if not game_map.is_blocked(player.x + dx, player.y + dy):
+                player.move(dx, dy)
 
         elif exiting:
             return True
