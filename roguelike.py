@@ -37,7 +37,7 @@ def handle_keys():
     elif user_input.key == 'RIGHT':
         playerx += 1
 
-#tdl.set_font('consolas12x12_gs_tc.png', greyscale=True, altLayout=True)
+tdl.set_font('consolas12x12_gs_tc.png', greyscale=True, altLayout=True)
 console = tdl.init(_SCREEN_WIDTH,
                    _SCREEN_HEIGHT,
                    title='Roguelike',
