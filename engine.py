@@ -3,6 +3,7 @@ from input_handlers import handle_keys
 from entity import Entity
 from render_function import render_all, clear_all
 from map_objects.game_map import GameMap
+from fov_functions import initialize_fov, recompute_fov
 
 #fonction main Check if the module is ran as main program (name devient main).
 #Si ce fichier est importé d'un autre module, name sera le nom du module
@@ -17,10 +18,16 @@ def main():
     room_min_size = 6
     max_rooms = 30
 
+    fov_algorithm = 1
+    fov_light_walls = True
+    fov_radius = 10
+
 
     colors = {
         'dark_wall': libtcod.Color(128, 128, 128),
-        'dark_ground': libtcod.Color(0, 0, 0)
+        'dark_ground': libtcod.Color(0, 0, 0),
+        'light_wall': libtcod.Color(130, 110, 50),
+        'light_ground': libtcod.Color(200, 180, 50)
     }
 
 
@@ -37,6 +44,10 @@ def main():
     game_map = GameMap(map_width, map_height)
     game_map.make_map(max_rooms, room_min_size, room_max_size, map_width, map_height, player)
 
+    fov_recompute = True
+    fov_map = initialize_fov(game_map)
+
+
     key = libtcod.Key()
     mouse = libtcod.Mouse()
 #boucle qui se finit pas
@@ -44,8 +55,13 @@ def main():
 #Function that capture new event
         libtcod.sys_check_for_event(libtcod.EVENT_KEY_PRESS, key, mouse)
 
+        if fov_recompute:
+            recompute_fov(fov_map, player.x, player.y, fov_radius, fov_light_walls, fov_algorithm)
 #Function that draws entities
-        render_all(con, entities, game_map, screen_width, screen_height, colors)
+        render_all(con, entities, game_map, fov_map, fov_recompute, screen_width, screen_height, colors)
+
+        fov_recompute = False
+
         libtcod.console_flush()
 #Clear les entities pour que ça ne laisse pas de traces
         clear_all(con, entities)
@@ -62,6 +78,8 @@ def main():
             dx, dy = move
             if not game_map.is_blocked(player.x + dx, player.y + dy):
                 player.move(dx, dy)
+
+                fov_recompute = True
 
         elif exiting:
             return True
