@@ -1,6 +1,6 @@
 import libtcodpy as libtcod
 from input_handlers import handle_keys
-from entity import Entity
+from entity import Entity, get_blocking_entities_at_location
 from render_function import render_all, clear_all
 from map_objects.game_map import GameMap
 from fov_functions import initialize_fov, recompute_fov
@@ -22,6 +22,8 @@ def main():
     fov_light_walls = True
     fov_radius = 10
 
+    max_monsters_per_room = 3
+
 
     colors = {
         'dark_wall': libtcod.Color(128, 128, 128),
@@ -31,9 +33,9 @@ def main():
     }
 
 
-    player = Entity(int(screen_width / 2), int(screen_height / 2), '@', libtcod.purple)
-    npc = Entity(int(screen_width / 2 - 5), int(screen_height / 2), '@', libtcod.yellow)
-    entities = [npc, player]
+    player = Entity(0, 0, '@', libtcod.white, 'Player', blocks=True)
+    entities = [player]
+
 
     libtcod.console_set_custom_font('arial10x10.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TCOD)
 #What create the screen (Width, Height, Nom, Fullscreen)
@@ -42,7 +44,7 @@ def main():
     con = libtcod.console_new(screen_width, screen_height)
 #Initialise la Game map
     game_map = GameMap(map_width, map_height)
-    game_map.make_map(max_rooms, room_min_size, room_max_size, map_width, map_height, player)
+    game_map.make_map(max_rooms, room_min_size, room_max_size, map_width, map_height, player, entities, max_monsters_per_room)
 
     fov_recompute = True
     fov_map = initialize_fov(game_map)
@@ -76,10 +78,17 @@ def main():
 
         if move:
             dx, dy = move
-            if not game_map.is_blocked(player.x + dx, player.y + dy):
-                player.move(dx, dy)
+            destination_x = player.x + dx
+            destination_y = player.y + dy
+            if not game_map.is_blocked(destination_x, destination_y):
+                target = get_blocking_entities_at_location(entities, destination_x, destination_y)
 
-                fov_recompute = True
+                if target:
+                    print('You kick the ' + target.name + ' in the shins, much to its annoyance!')
+                else:
+                    player.move(dx, dy)
+
+                    fov_recompute = True
 
         elif exiting:
             return True
