@@ -19,3 +19,13 @@ If you're **new to Git, GitHub, or version control**…
 
 * [Git Documentation](https://git-scm.com/documentation) - everything you need to know about version control, and how to get started with Git.
 * [GitHub Help](https://help.github.com/) - everything you need to know about GitHub.
+
+#Eolandia
+
+This is my attempt to follow /r/roguelikedev does the complete Python tutorial
+
+I have no knowledge of programming, but i'm eager to learn python because it could open possibility at my work. And for fun!.
+
+Engine.py Contains the main code for the game. For now, draw the background and a @ and call the function for moving.
+
+input_handlers.py Contains the function to move (return dictionary (key + values) )
